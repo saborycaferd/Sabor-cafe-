@@ -1,0 +1,420 @@
+/* ============================================
+   VARIABLES Y CONFIGURACIÓN BASE
+   ============================================ */
+:root {
+    --primary: #d4a373;      /* Color Café/Dorado principal */
+    --primary-dark: #a67c52;
+    --bg-dark: #121212;      /* Fondo de la pagina */
+    --board-bg: #1a1a1a;     /* Fondo de la carta */
+    --card-bg: #262626;      /* Fondo de cada plato */
+    --text-main: #fefae0;
+    --text-muted: #aaaaaa;
+    --accent-red: #e63946;
+    
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Poppins', sans-serif;
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-dark);
+    font-family: var(--font-body);
+    color: var(--text-main);
+    line-height: 1.6;
+    padding: 10px; /* Espacio en moviles */
+}
+
+/* Contenedor principal tipo "Carta" */
+.menu-board {
+    max-width: 1000px; /* Un poco mas ancho para acomodar imagenes */
+    margin: 20px auto;
+    background-color: var(--board-bg);
+    padding: 40px 20px;
+    border-radius: 20px;
+    border: 3px solid var(--primary);
+    box-shadow: 0 15px 50px rgba(0,0,0,0.8);
+    position: relative;
+    overflow: hidden; /* Para animaciones internas */
+}
+
+/* ============================================
+   HEADER & ESTILOS GENERALES
+   ============================================ */
+.menu-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.menu-header h1 {
+    font-family: var(--font-heading);
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    line-height: 1;
+}
+
+.divider {
+    height: 4px;
+    width: 80px;
+    background: var(--primary);
+    margin: 15px auto;
+    border-radius: 2px;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--text-muted);
+}
+
+.text-center { text-align: center; }
+
+/* Títulos de Sección */
+.menu-section {
+    margin-bottom: 50px;
+}
+
+.section-title {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #333;
+}
+
+.section-subtitle {
+    margin-top: -20px;
+    margin-bottom: 20px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* ============================================
+   EL "TRUCO" MAGICÓ: GRILLA AUTOMÁTICA
+   ============================================ */
+/* Este contenedor ajusta automáticamente los platos */
+.items-container {
+    display: grid;
+    /* repeat(auto-fill, minmax(ancho_minimo, 1fr)) 
+       Hará que si hay espacio, se pongan 2 o 3 en linea, 
+       sino, 1 solo (en moviles) */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* ============================================
+   ESTILO DE CADA PLATO (MENU ITEM)
+   ============================================ */
+.menu-item {
+    background-color: var(--card-bg);
+    border-radius: 15px;
+    overflow: hidden; /* Para que la imagen respete los bordes redondos */
+    transition: var(--transition);
+    border: 1px solid transparent;
+    display: flex;
+    flex-direction: column; /* Imagen arriba, texto abajo */
+    height: 100%; /* Para que todos midan lo mismo en la grilla */
+}
+
+.menu-item:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+}
+
+/* Control de Imágenes */
+.item-img {
+    width: 100%;
+    height: 180px; /* Altura fija para uniformidad */
+    object-fit: cover; /* Recorta la imagen para que llene el espacio sin deformarse */
+    border-bottom: 2px solid var(--primary);
+}
+
+.item-info {
+    padding: 15px;
+    flex-grow: 1; /* Empuja el contenido hacia abajo si es necesario */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.item-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+.item-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.item-price {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary);
+    white-space: nowrap; /* Evita que el precio se rompa en dos lineas */
+}
+
+.item-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 300;
+}
+
+/* Item Especial (ej: Burger #Sabor&Cafe) */
+.special-item {
+    border: 1px dashed var(--primary);
+}
+
+/* ============================================
+   SECCIÓN PLATO DEL DÍA
+   ============================================ */
+.special-highlight {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    padding: 2px;
+    border-radius: 20px;
+    margin-bottom: 50px;
+    color: #1a1a1a;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(212, 163, 115, 0.4);
+}
+
+.special-content { text-align: center; }
+
+.special-highlight h2 { font-family: var(--font-heading); font-size: 2.5rem; margin-bottom: 5px; }
+.special-highlight p { font-weight: 500; margin-bottom: 10px; max-width: 600px; margin: 0 auto 10px; }
+
+.price-tag {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.badge {
+    display: inline-block;
+    background-color: var(--accent-red);
+    color: white;
+    padding: 5px 5px;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+}
+
+/* ============================================
+   SECCIÓN COMBOS (Diseño Tarjeta)
+   ============================================ */
+.combos-section {
+    background-color: rgba(212, 163, 115, 0.05);
+    padding: 30px;
+    border-radius: 20px;
+}
+
+.combos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.combo-card {
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 15px;
+    border-left: 4px solid var(--primary);
+    display: flex;
+    flex-direction: column;
+}
+
+.combo-header {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 10px;
+}
+
+.combo-details {
+    list-style: none;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    flex-grow: 1;
+    margin-bottom: 15px;
+}
+
+.combo-details li {
+    margin-bottom: 5px;
+    position: relative;
+    padding-left: 15px;
+}
+
+.combo-details li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+}
+
+.combo-price {
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-align: right;
+    color: var(--text-main);
+}
+
+/* ============================================
+   SECCIÓN BEBIDAS (Estilo Lista Simplificado)
+   ============================================ */
+.drinks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.drink-cat h3 {
+    color: var(--primary);
+    margin-bottom: 15px;
+    border-bottom: 1px solid #333;
+}
+
+.drink-cat ul { list-style: none; }
+
+.drink-cat li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.d-price { color: var(--primary); font-weight: 700; }
+.d-desc { font-size: 0.8rem; color: var(--text-muted); margin-top: -5px; margin-bottom: 10px !important;}
+
+/* ============================================
+   ANIMACIONES
+   ============================================ */
+/* Animación de entrada para items */
+@keyframes slideInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in {
+    animation: slideInUp 0.6s ease forwards;
+    opacity: 0; /* Empieza invisible */
+}
+
+/* Retrasos de animación para efecto cascada (opcional, requiere JS o añadir clases a mano) 
+   Aquí lo aplicamos de forma general para que no entren todos de golpe */
+.menu-item:nth-child(1) { animation-delay: 0.1s; }
+.menu-item:nth-child(2) { animation-delay: 0.2s; }
+.menu-item:nth-child(3) { animation-delay: 0.3s; }
+.menu-item:nth-child(4) { animation-delay: 0.4s; }
+
+/* Animación Pop para el plato del día */
+@keyframes popIn {
+    0% { transform: scale(0.9); opacity: 0; }
+    70% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-pop {
+    animation: popIn 0.8s cubic-bezier(0.26, 0.53, 0.74, 1.48) forwards;
+}
+
+/* ============================================
+   FOOTER & BOTÓN WHATSAPP
+   ============================================ */
+.menu-footer {
+    text-align: center;
+    margin-top: 50px;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    border-top: 1px solid #333;
+    padding-top: 20px;
+}
+
+.whatsapp-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #25d366;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 1000;
+    transition: var(--transition);
+}
+
+.whatsapp-btn:hover {
+    transform: scale(1.05);
+    background-color: #20b354;
+}
+
+.whatsapp-btn img {
+    width: 25px;
+    height: 25px;
+}
+
+/* ============================================
+   RESPONSIVE (Ajustes para pantallas pequeñas)
+   ============================================ */
+@media (max-width: 600px) {
+    .menu-header h1 { font-size: 2.5rem; }
+    .special-highlight h2 { font-size: 1.8rem; }
+    .price-tag { font-size: 2.2rem; }
+    .menu-board { padding: 20px 10px; }
+    .item-img { height: 150px; } /* Imagenes un poco mas bajas en movil */
+}
+
+/* --- ESTILOS DEL LOGO --- */
+.logo-container {
+    width: 120px;            /* Tamaño del logo */
+    height: 120px;
+    margin: 0 auto 20px;    /* Centrado y espacio abajo */
+    background: white;       /* Fondo blanco detrás del logo */
+    border-radius: 50%;      /* Lo hace circular */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--primary); /* Círculo decorativo */
+    padding: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.main-logo {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;     /* Asegura que el logo no se deforme */
+}
+
+/* --- REFINAMIENTO DEL HEADER --- */
+.menu-header h1 {
+    font-size: 2.5rem;       /* Un poco más pequeño para dar espacio al logo */
+    color: var(--text-main);
+    margin-top: 10px;
+}
+
